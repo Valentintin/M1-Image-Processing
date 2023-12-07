@@ -1,0 +1,6 @@
+# Ignore les fichiers de configurations de VS code
+.vscode/
+
+# Ignore les dossiers d'executables
+bin/
+obj/
