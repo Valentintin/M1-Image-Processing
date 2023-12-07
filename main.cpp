@@ -3,7 +3,7 @@
 using namespace cv;
 int main()
 {
-    std::string image_path = "path/to/image";
+    std::string image_path = "img/madame.png";
     Mat img = imread(image_path, IMREAD_COLOR);
 
     imshow("Display window", img);
