@@ -7,6 +7,6 @@ int main()
     Mat img = imread(image_path, IMREAD_COLOR);
 
     imshow("Display window", img);
-    int k = waitKey(0); // Wait for a keystroke in the window
+    int k = waitKey(0); // Wait for a keystroke in  sudo find / -name "*opencv*"the window
     return 0;
 }
