@@ -11,6 +11,22 @@ using namespace cv;
 class Fusion{
     public:
 
+        /**
+         * @brief Construct a new Fusion object.
+         * 
+         * @param listRegion_ 
+         */
+        Fusion(std::vector<Region> listRegion_, int nbRegion);
+
+
+        /**
+         * @brief function for fusion all region passed in the object.
+         * 
+         * @return Mat 
+         */
+        Mat getFusion();
+
+
     private:
         Mat fusioned;
         std::vector<Region> listRegion;

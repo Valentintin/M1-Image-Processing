@@ -30,7 +30,7 @@ class DivImage {
         ~DivImage();
 
         /**
-         * @brief 
+         * @brief divise the image in n for create Region
          * 
          */
         void division();
