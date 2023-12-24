@@ -129,6 +129,78 @@ main/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
 .PHONY : main/fast
 
+DivImage.o: DivImage.cpp.o
+.PHONY : DivImage.o
+
+# target to build an object file
+DivImage.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/DivImage.cpp.o
+.PHONY : DivImage.cpp.o
+
+DivImage.i: DivImage.cpp.i
+.PHONY : DivImage.i
+
+# target to preprocess a source file
+DivImage.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/DivImage.cpp.i
+.PHONY : DivImage.cpp.i
+
+DivImage.s: DivImage.cpp.s
+.PHONY : DivImage.s
+
+# target to generate assembly for a file
+DivImage.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/DivImage.cpp.s
+.PHONY : DivImage.cpp.s
+
+Fusion.o: Fusion.cpp.o
+.PHONY : Fusion.o
+
+# target to build an object file
+Fusion.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Fusion.cpp.o
+.PHONY : Fusion.cpp.o
+
+Fusion.i: Fusion.cpp.i
+.PHONY : Fusion.i
+
+# target to preprocess a source file
+Fusion.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Fusion.cpp.i
+.PHONY : Fusion.cpp.i
+
+Fusion.s: Fusion.cpp.s
+.PHONY : Fusion.s
+
+# target to generate assembly for a file
+Fusion.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Fusion.cpp.s
+.PHONY : Fusion.cpp.s
+
+Region.o: Region.cpp.o
+.PHONY : Region.o
+
+# target to build an object file
+Region.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Region.cpp.o
+.PHONY : Region.cpp.o
+
+Region.i: Region.cpp.i
+.PHONY : Region.i
+
+# target to preprocess a source file
+Region.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Region.cpp.i
+.PHONY : Region.cpp.i
+
+Region.s: Region.cpp.s
+.PHONY : Region.s
+
+# target to generate assembly for a file
+Region.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Region.cpp.s
+.PHONY : Region.cpp.s
+
 main.o: main.cpp.o
 .PHONY : main.o
 
@@ -162,6 +234,15 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... main"
+	@echo "... DivImage.o"
+	@echo "... DivImage.i"
+	@echo "... DivImage.s"
+	@echo "... Fusion.o"
+	@echo "... Fusion.i"
+	@echo "... Fusion.s"
+	@echo "... Region.o"
+	@echo "... Region.i"
+	@echo "... Region.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

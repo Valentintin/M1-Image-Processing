@@ -8,6 +8,12 @@ using namespace cv;
 class Region{
     public:
         /**
+         * @brief Construct a default new Region object
+         * 
+         */
+        Region();
+
+        /**
          * @brief Construct a new Region object
          * 
          * @param Region 
