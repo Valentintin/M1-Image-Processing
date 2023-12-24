@@ -21,7 +21,7 @@ class DivImage {
          * @param img 
          * @param nbDiv_ 
          */
-        DivImage(Mat * img, const int & nbDiv_);
+        DivImage(Mat img, const int & nbDiv_);
 
         /**
          * @brief Destroy the Div Region object
@@ -46,7 +46,7 @@ class DivImage {
 
 
     private:
-        Mat* image;
+        Mat image;
         std::vector<Region> listRegion;
         int nbDiv;
 };
