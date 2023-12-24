@@ -18,3 +18,15 @@ https://docs.opencv.org/2.4.13.7/doc/user_guide/ug_mat.html?highlight=pixel
 ## multi-thread
 Cours sur le multi-thread C++ : 
 https://asr-lyon1.gitlabpages.inria.fr/prog-concurrente/cm-threads/cm-threads-slides.pdf
+
+
+## valgrind
+pour regarder les fuites de mêmoire : 
+```sh
+valgrind --leak-check=full ./main 
+```
+pour regarder l'optimisation : 
+```sh
+valgrind --tool=callgrind ./main && callgrind_annotate callgrind.out.* >>optimisation
+```
+et penser à *rm callgrind.out** à la fin

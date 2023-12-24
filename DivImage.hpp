@@ -2,6 +2,7 @@
 #define _DIVIMAGE
 
 #include <opencv2/core.hpp>
+#include <opencv2/core/types.hpp>
 #include <opencv2/highgui.hpp>
 #include <vector>
 #include "Region.hpp"
@@ -21,7 +22,7 @@ class DivImage {
          * @param img 
          * @param nbDiv_ 
          */
-        DivImage(Mat img, const int & nbDiv_);
+        DivImage(const Mat & img, const int & nbDiv_);
 
         /**
          * @brief Destroy the Div Region object
@@ -42,11 +43,17 @@ class DivImage {
          */
         std::vector<Region> getListRegion();
 
-
-
-
     private:
-        Mat image;
+
+        /**
+         * @brief find a random point in the array.
+         * 
+         * @param cooDiv 
+         * @return Point 
+         */
+        Point randomPlantGerm(Point cooDiv);
+        Mat* image;
+        Size* divSize;
         std::vector<Region> listRegion;
         int nbDiv;
 };
