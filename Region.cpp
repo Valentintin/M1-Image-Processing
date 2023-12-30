@@ -4,9 +4,7 @@ Region::Region() {
 
 }
 
-Region::Region(const Mat * image_) {
-
-}
+Region::Region(Mat * image_, const Point & germInit, const int & id_): image(image_), germ(germInit), id(id_){}
 
 Region::~Region() {
 
