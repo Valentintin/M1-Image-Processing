@@ -24,7 +24,7 @@ class Region{
          * 
          * @param Region 
          */
-        Region(Mat * image_, const Point & germInit);
+        Region(Mat * image_, const Point & germInit, const int & id_);
 
         /**
          * @brief Destroy the Region object
@@ -42,6 +42,7 @@ class Region{
     private:
         Mat* image;
         Point germ;
+        int id;
 };
 
 #endif

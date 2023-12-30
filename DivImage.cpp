@@ -21,11 +21,14 @@ DivImage::~DivImage() {
 void DivImage::division() {
     listRegion.clear();
     listRegion.reserve(nbDiv);
+
+    int id = 0;
     for (int x = 0; x<=image->size().width; x = x + divSize->width) {
         for (int y = 0; y<=image->size().height; y = y + divSize->height) {
             Point randomCooDiv = randomPlantGerm(Point(x, y));
             //std::cout<<"init germ at : "<<randomCooDiv<<'\n';
-            listRegion.emplace_back(Region(image,randomCooDiv));
+            listRegion.emplace_back(Region(image,randomCooDiv, id));
+            id++;
         }
     }
 }
