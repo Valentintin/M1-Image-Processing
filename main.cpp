@@ -15,6 +15,10 @@ int main()
     divImage->division();
     std::vector<Region> listRegion = divImage->getListRegion();
 
+    // for (int i = 0; i<listRegion.size(); i++) {
+    //     listRegion[i].pathGerm();
+    // }
+
     
 
     //imshow("Display window", img);

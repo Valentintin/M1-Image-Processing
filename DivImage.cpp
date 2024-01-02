@@ -1,9 +1,5 @@
 #include "DivImage.hpp"
 #include "Region.hpp"
-#include <iostream>
-#include <opencv2/core.hpp>
-#include <opencv2/core/types.hpp>
-#include <vector>
 
 DivImage::DivImage(const Mat & img, const int & nbDiv_): image(new Mat(img)), nbDiv(nbDiv_) {
     divSize = new Size(image->size().height/sqrt(nbDiv), image->size().width/sqrt(nbDiv));

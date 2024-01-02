@@ -10,6 +10,6 @@ Region::~Region() {
 
 }
 
-void Region::pathGerm(const int & step) {
+void Region::pathGerm() {
 
 }

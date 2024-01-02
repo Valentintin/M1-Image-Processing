@@ -6,6 +6,7 @@
 #include <opencv2/highgui.hpp>
 #include <vector>
 #include "Region.hpp"
+#include <iostream>
 
 using namespace cv;
 
