@@ -1,20 +1,15 @@
 #include "Region.hpp"
 
-Region(const Mat *image_) {
-    image = image_;
-    germeX = 0;
-    germeY = 0;
+Region::Region() {
+
 }
 
-~Region() {
-    delete image;
-    germeX = 0;
-    germeY = 0;
+Region::Region(Mat * image_, const Point & germInit, const int & id_): image(image_), germ(germInit), id(id_){}
+
+Region::~Region() {
+
 }
 
-void pathGerm(const int & step) {
-    traverseX = germeX;
-    traverseY = germeY;
-    
-    while()
+void Region::pathGerm() {
+
 }
