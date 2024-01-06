@@ -38,25 +38,25 @@ bool Region::cond_color(const Point & point) {
 }
     
 bool Region::cond_y_sud(const Point & point) {
-    if (point.y < image->size().height-1) {
+    if (point.y < image->size().height-1 && point.y >= 0) {
         return true;
     }
     return false;
 }
 bool Region::cond_y_nord(const Point & point) {
-    if (point.y > 0) {
+    if (point.y > 0 && point.y < image->size().height) {
         return true;
     }
     return false;
 }
-bool Region::cond_x_sud(const Point & point) {
-    if (point.x < image->size().width-1) {
+bool Region::cond_x_est(const Point & point) {
+    if (point.x < image->size().width-1 && point.x >= 0) {
         return true;
     }
     return false;
 }
-bool Region::cond_x_nord(const Point & point) {
-    if (point.x > 0) {
+bool Region::cond_x_ouest(const Point & point) {
+    if (point.x > 0 && point.x < image->size().width) {
         return true;
     }
     return false;
@@ -74,7 +74,7 @@ void Region::pathGerm() {
     Pile.push(germ);//empile le cas init
     //auto it = refused.begin();
 
-    std::cout<<"kk3 ";
+    std::cout<<"before while ";
 
     while(!Pile.empty()) {
 
@@ -82,9 +82,9 @@ void Region::pathGerm() {
         image->at<uchar>(Pile.top().y, Pile.top().x) = -id;
         Point temp(Pile.top());
         Pile.pop();
-        std::cout<<"kk4 ";
+        std::cout<<"dépile ";
 
-        //Y-1
+        //Y+1
         if (cond_y_sud(temp)) {
             Point Ysud = Point(temp.y+1, temp.x);
             if (cond_color(Ysud)) {
@@ -92,6 +92,76 @@ void Region::pathGerm() {
             } else {
                 refused.emplace_back(Ysud);
             }
+            std::cout<<"cond_y_sud ";
+        }
+        else {
+            Point Ysud = Point(temp.y, temp.x);
+            if (cond_color(Ysud)) {
+                Pile.push(Ysud);
+            } else {
+                refused.emplace_back(Ysud);
+            }
+            std::cout<<"point extreme sud ";
+        }
+
+        //Y-1
+        if (cond_y_nord(temp)) {
+            Point Ynord = Point(temp.y-1, temp.x);
+            if (cond_color(Ynord)) {
+                Pile.push(Ynord);
+            } else {
+                refused.emplace_back(Ynord);
+            }
+            std::cout<<"cond_y_nord ";
+        }
+        else {
+            Point Ynord = Point(temp.y, temp.x);
+            if (cond_color(Ynord)) {
+                Pile.push(Ynord);
+            } else {
+                refused.emplace_back(Ynord);
+            }
+            std::cout<<"point extreme nord ";
+        }
+
+        //X+1
+        if (cond_x_est(temp)) {
+            Point Xest = Point(temp.y, temp.x+1);
+            if (cond_color(Xest)) {
+                Pile.push(Xest);
+            } else {
+                refused.emplace_back(Xest);
+            }
+            std::cout<<"cond_y_est ";
+        }
+        else {
+            Point Xest = Point(temp.y, temp.x);
+            if (cond_color(Xest)) {
+                Pile.push(Xest);
+            } else {
+                refused.emplace_back(Xest);
+            }
+            std::cout<<"point extreme est ";
+        }
+
+        //X-1
+        if (cond_x_ouest(temp)) {
+            Point Xouest = Point(temp.y, temp.x-1);
+            if (cond_color(Xouest)) {
+                Pile.push(Xouest);
+            } else {
+                refused.emplace_back(Xouest);
+            }
+            std::cout<<"cond_y_ouest ";
+        }
+        else {
+            Point Xouest = Point(temp.y, temp.x);
+            if (cond_color(Xouest)) {
+                Pile.push(Xouest);
+            } else {
+                refused.emplace_back(Xouest);
+            }
+            std::cout<<"point extreme ouest ";
         }
 
         //it = std::find(refused.begin(), refused.end(), Ysud);

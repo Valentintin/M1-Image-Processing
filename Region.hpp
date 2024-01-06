@@ -51,8 +51,8 @@ class Region{
          */
         bool cond_color(const Point & point);
 
-        bool cond_x_sud(const Point & point);
-        bool cond_x_nord(const Point & point);        
+        bool cond_x_est(const Point & point);
+        bool cond_x_ouest(const Point & point);        
         bool cond_y_sud(const Point & point);
         bool cond_y_nord(const Point & point);
         Mat* image;
