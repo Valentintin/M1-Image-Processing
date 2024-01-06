@@ -23,8 +23,8 @@ void DivImage::division() {
         for (int y = 0; y<=image->size().height; y = y + divSize->height) {
             Point randomCooDiv = randomPlantGerm(Point(x, y));
             //std::cout<<"init germ at : "<<randomCooDiv<<'\n';
-            listRegion.emplace_back(Region(image,randomCooDiv, id));
             id++;
+            listRegion.emplace_back(Region(image,randomCooDiv, id, image->at<uchar>(y, x), 20));
         }
     }
 }

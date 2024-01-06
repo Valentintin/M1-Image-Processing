@@ -16,13 +16,13 @@ class Fusion{
          * 
          * @param listRegion_ 
          */
-        Fusion(std::vector<Region> listRegion_, int nbRegion);
+        Fusion(std::vector<Region> listRegion_);
 
 
         /**
          * @brief function for fusion all region passed in the object.
          * 
-         * @return Mat 
+         * @return Mat
          */
         Mat getFusion();
 
@@ -30,7 +30,6 @@ class Fusion{
     private:
         Mat fusioned;
         std::vector<Region> listRegion;
-        int nbRegion;
 };
 
 #endif

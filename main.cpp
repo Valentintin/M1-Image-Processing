@@ -1,3 +1,4 @@
+#include <iostream>
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
 #include <vector>
@@ -15,7 +16,9 @@ int main()
     divImage->division();
     std::vector<Region> listRegion = divImage->getListRegion();
 
+    listRegion[0].pathGerm();
     // for (int i = 0; i<listRegion.size(); i++) {
+    //     std::cout<<listRegion[i].id<<'\n';
     //     listRegion[i].pathGerm();
     // }
 
