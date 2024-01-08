@@ -31,7 +31,7 @@ bool Region::cond_color(const Point & point) {
         && color.val[1] >= intensity.val[1]-seuil
         && color.val[2] <= intensity.val[2]+seuil
         && color.val[2] >= intensity.val[2]-seuil) {
-            std::cout<<"bonne couleur \n";
+            //std::cout<<"bonne couleur \n";
             return true;
     }
     return false;
@@ -62,24 +62,18 @@ bool Region::cond_x_ouest(const Point & point) {
     return false;
 }
 
-
-
-
-
-
-
 void Region::pathGerm() {
     //pile init avec germ de base
     std::stack<Point> Pile;  
     Pile.push(germ);//empile le cas init
     //auto it = refused.begin();
 
-    std::cout<<"before while ";
+    //std::cout<<"before while ";
 
     while(!Pile.empty()) {
 
         //on dépile
-        std::cout<<"dépile "<<Pile.top().x<<','<<Pile.top().y<<'\n';
+        //std::cout<<"dépile "<<Pile.top().x<<','<<Pile.top().y<<'\n';
         image->at<uchar>(Pile.top().y, Pile.top().x) = -id;
         Point temp(Pile.top());
         Pile.pop();
@@ -92,7 +86,7 @@ void Region::pathGerm() {
             } else {
                 refused.emplace_back(Ysud);
             }
-            std::cout<<"cond_y_sud ";
+            //std::cout<<"cond_y_sud ";
         }
         else {
             Point Ysud = Point(temp.y, temp.x);
@@ -101,7 +95,7 @@ void Region::pathGerm() {
             } else {
                 refused.emplace_back(Ysud);
             }
-            std::cout<<"point extreme sud ";
+            //std::cout<<"point extreme sud ";
         }
 
         //Y-1
@@ -112,7 +106,7 @@ void Region::pathGerm() {
             } else {
                 refused.emplace_back(Ynord);
             }
-            std::cout<<"cond_y_nord ";
+            //std::cout<<"cond_y_nord ";
         }
         else {
             Point Ynord = Point(temp.y, temp.x);
@@ -121,7 +115,7 @@ void Region::pathGerm() {
             } else {
                 refused.emplace_back(Ynord);
             }
-            std::cout<<"point extreme nord ";
+            //std::cout<<"point extreme nord ";
         }
 
         //X+1
@@ -132,7 +126,7 @@ void Region::pathGerm() {
             } else {
                 refused.emplace_back(Xest);
             }
-            std::cout<<"cond_y_est ";
+            //std::cout<<"cond_y_est ";
         }
         else {
             Point Xest = Point(temp.y, temp.x);
@@ -141,7 +135,7 @@ void Region::pathGerm() {
             } else {
                 refused.emplace_back(Xest);
             }
-            std::cout<<"point extreme est ";
+            //std::cout<<"point extreme est ";
         }
 
         //X-1
@@ -152,7 +146,7 @@ void Region::pathGerm() {
             } else {
                 refused.emplace_back(Xouest);
             }
-            std::cout<<"cond_y_ouest ";
+            //std::cout<<"cond_y_ouest ";
         }
         else {
             Point Xouest = Point(temp.y, temp.x);
@@ -161,7 +155,7 @@ void Region::pathGerm() {
             } else {
                 refused.emplace_back(Xouest);
             }
-            std::cout<<"point extreme ouest ";
+            //std::cout<<"point extreme ouest ";
         }
 
         //it = std::find(refused.begin(), refused.end(), Ysud);

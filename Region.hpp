@@ -42,6 +42,8 @@ class Region{
         
         int id;
 
+        Mat* image;
+        
     private:
         /**
          * @brief verify that the color is near from the intensity.
@@ -55,11 +57,11 @@ class Region{
         bool cond_x_ouest(const Point & point);        
         bool cond_y_sud(const Point & point);
         bool cond_y_nord(const Point & point);
-        Mat* image;
         Point germ;
         std::vector<Point> refused;
         int seuil;
         Scalar intensity; //couleur de germe initial
+        Scalar randomFinalColor;
 };
 
 #endif
