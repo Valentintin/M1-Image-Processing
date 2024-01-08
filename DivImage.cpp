@@ -19,10 +19,10 @@ void DivImage::division() {
     listRegion.reserve(nbDiv);
 
     int id = 0;
-    for (int x = 0; x<=image->size().width; x = x + divSize->width) {
-        for (int y = 0; y<=image->size().height; y = y + divSize->height) {
+    for (int x = 0; x + divSize->width<image->size().width; x = x + divSize->width) {
+        for (int y = 0; y + divSize->height<image->size().height; y = y + divSize->height) {
             Point randomCooDiv = randomPlantGerm(Point(x, y));
-            //std::cout<<"init germ at : "<<randomCooDiv<<'\n';
+            std::cout<<"init germ at : "<<randomCooDiv<<'\n';
             id++;
             listRegion.emplace_back(Region(image,randomCooDiv, id, image->at<uchar>(y, x), 20));
         }
@@ -34,7 +34,7 @@ std::vector<Region> DivImage::getListRegion() {
 }
 
 Point DivImage::randomPlantGerm(Point cooDiv) {
-    int randX = rand() % divSize->width + cooDiv.x + cooDiv.x;
-    int randY = rand() % divSize->height + cooDiv.y + cooDiv.y;
-    return Point(randX, randY);
+    int randX = rand() % (divSize->width);
+    int randY = rand() % (divSize->height);
+    return Point(randX + cooDiv.x, randY + cooDiv.y);
 }

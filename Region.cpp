@@ -79,10 +79,10 @@ void Region::pathGerm() {
     while(!Pile.empty()) {
 
         //on dépile
+        std::cout<<"dépile "<<Pile.top().x<<','<<Pile.top().y<<'\n';
         image->at<uchar>(Pile.top().y, Pile.top().x) = -id;
         Point temp(Pile.top());
         Pile.pop();
-        std::cout<<"dépile ";
 
         //Y+1
         if (cond_y_sud(temp)) {

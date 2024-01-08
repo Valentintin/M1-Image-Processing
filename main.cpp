@@ -10,6 +10,7 @@ int main()
 {
     std::string image_path = "img/madame.png";
     Mat img = imread(image_path, IMREAD_COLOR);
+    std::cout<<"height : "<<img.size().height<<", width : "<<img.size().width<<'\n';
 
     DivImage* divImage = new DivImage(img, 9);
 
