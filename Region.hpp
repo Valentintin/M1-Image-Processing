@@ -26,7 +26,7 @@ class Region{
          * 
          * @param Region 
          */
-        Region(Mat * image_, const Point & germInit, const int & id_, const Scalar & intensity_, const int & seuil_);
+        Region(Mat * image_, const Point & germInit, const int & id_, const Vec3b & intensity_, const int & seuil_);
 
         /**
          * @brief Destroy the Region object
@@ -54,14 +54,14 @@ class Region{
         bool cond_color(const Point & point);
 
         bool cond_x_est(const Point & point);
-        bool cond_x_ouest(const Point & point);        
+        bool cond_x_ouest(const Point & point);
         bool cond_y_sud(const Point & point);
         bool cond_y_nord(const Point & point);
         Point germ;
         std::vector<Point> refused;
         int seuil;
-        Scalar intensity; //couleur de germe initial
-        Scalar randomFinalColor;
+        Vec3b intensity; //couleur de germe initial
+        Vec3b randomFinalColor;
 };
 
 #endif

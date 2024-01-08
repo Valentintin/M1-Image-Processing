@@ -1,6 +1,7 @@
 #include "Region.hpp"
 #include <iterator>
 #include <opencv2/core/hal/interface.h>
+#include <opencv2/core/matx.hpp>
 #include <set>
 #include <iostream>
 #include <stack>
@@ -11,7 +12,7 @@ Region::Region() {
 }
 
 
-Region::Region(Mat * image_, const Point & germInit, const int & id_, const Scalar & intensity_, const int & seuil_)  : 
+Region::Region(Mat * image_, const Point & germInit, const int & id_, const Vec3b & intensity_, const int & seuil_)  : 
 image(image_), germ(germInit), id(id_), intensity(intensity_), seuil(seuil_){
     refused.clear();
 }
@@ -21,7 +22,7 @@ Region::~Region() {
 }
 
 bool Region::cond_color(const Point & point) {
-    Scalar color = image->at<uchar>(point);
+    Vec3b color = image->at<Vec3b>(point);
     if (color.val[0] >= 0
         && color.val[1] >= 0
         && color.val[2] >= 0
@@ -66,7 +67,6 @@ void Region::pathGerm() {
     //pile init avec germ de base
     std::stack<Point> Pile;  
     Pile.push(germ);//empile le cas init
-    //auto it = refused.begin();
 
     //std::cout<<"before while ";
 
@@ -74,7 +74,7 @@ void Region::pathGerm() {
 
         //on dépile
         //std::cout<<"dépile "<<Pile.top().x<<','<<Pile.top().y<<'\n';
-        image->at<uchar>(Pile.top().y, Pile.top().x) = -id;
+        image->at<Vec3b>(Pile.top().y, Pile.top().x) = Vec3b(-id, -id, -id);
         Point temp(Pile.top());
         Pile.pop();
 
@@ -83,19 +83,8 @@ void Region::pathGerm() {
             Point Ysud = Point(temp.y+1, temp.x);
             if (cond_color(Ysud)) {
                 Pile.push(Ysud);
-            } else {
-                refused.emplace_back(Ysud);
             }
             //std::cout<<"cond_y_sud ";
-        }
-        else {
-            Point Ysud = Point(temp.y, temp.x);
-            if (cond_color(Ysud)) {
-                Pile.push(Ysud);
-            } else {
-                refused.emplace_back(Ysud);
-            }
-            //std::cout<<"point extreme sud ";
         }
 
         //Y-1
@@ -103,19 +92,8 @@ void Region::pathGerm() {
             Point Ynord = Point(temp.y-1, temp.x);
             if (cond_color(Ynord)) {
                 Pile.push(Ynord);
-            } else {
-                refused.emplace_back(Ynord);
             }
             //std::cout<<"cond_y_nord ";
-        }
-        else {
-            Point Ynord = Point(temp.y, temp.x);
-            if (cond_color(Ynord)) {
-                Pile.push(Ynord);
-            } else {
-                refused.emplace_back(Ynord);
-            }
-            //std::cout<<"point extreme nord ";
         }
 
         //X+1
@@ -123,19 +101,8 @@ void Region::pathGerm() {
             Point Xest = Point(temp.y, temp.x+1);
             if (cond_color(Xest)) {
                 Pile.push(Xest);
-            } else {
-                refused.emplace_back(Xest);
             }
             //std::cout<<"cond_y_est ";
-        }
-        else {
-            Point Xest = Point(temp.y, temp.x);
-            if (cond_color(Xest)) {
-                Pile.push(Xest);
-            } else {
-                refused.emplace_back(Xest);
-            }
-            //std::cout<<"point extreme est ";
         }
 
         //X-1
@@ -143,52 +110,8 @@ void Region::pathGerm() {
             Point Xouest = Point(temp.y, temp.x-1);
             if (cond_color(Xouest)) {
                 Pile.push(Xouest);
-            } else {
-                refused.emplace_back(Xouest);
             }
             //std::cout<<"cond_y_ouest ";
         }
-        else {
-            Point Xouest = Point(temp.y, temp.x);
-            if (cond_color(Xouest)) {
-                Pile.push(Xouest);
-            } else {
-                refused.emplace_back(Xouest);
-            }
-            //std::cout<<"point extreme ouest ";
-        }
-
-        //it = std::find(refused.begin(), refused.end(), Ysud);
-        
-/* 
-        //Y+1
-        Scalar YnordIntens = image->at<uchar>(temp.y+1, temp.x);
-        Point Ynord = Point(temp.y+1, temp.x);
-        it = std::find(refused.begin(), refused.end(), Ynord);
-        if (it == refused.end() && condition(YnordIntens)) {
-            Pile.push(Ynord);
-        } else {
-            refused.emplace_back(Ynord);
-        }
-
-        //X-1
-        Scalar XouestIntens = image->at<uchar>(temp.y, temp.x-1);
-        Point Xouest = Point(temp.y, temp.x-1);
-        it = std::find(refused.begin(), refused.end(), Xouest);
-        if (it == refused.end() && condition(XouestIntens)) {
-            Pile.push(Xouest);
-        } else {
-            refused.emplace_back(Xouest);
-        }
-
-        //X+1
-        Scalar XestIntens = image->at<uchar>(temp.y, temp.x+1);
-        Point Xest = Point(temp.y, temp.x+1);
-        it = std::find(refused.begin(), refused.end(), Xest);
-        if (it == refused.end() && condition(XestIntens)) {
-            Pile.push(Xest);
-        } else {
-            refused.emplace_back(Xest);
-        } */
     }
 }

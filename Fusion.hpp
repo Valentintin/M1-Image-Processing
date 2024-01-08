@@ -33,7 +33,7 @@ class Fusion{
          * 
          */
         void randomIntensity();
-        std::vector<Scalar> randomIntensityTab;
+        std::vector<Vec3b> randomIntensityTab;
         Mat * fusioned;
         std::vector<Region> listRegion;
 };

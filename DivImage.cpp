@@ -1,5 +1,6 @@
 #include "DivImage.hpp"
 #include "Region.hpp"
+#include <opencv2/core/matx.hpp>
 
 DivImage::DivImage(Mat * img, const int & nbDiv_): image(img), nbDiv(nbDiv_) {
     divSize = new Size(image->size().height/sqrt(nbDiv), image->size().width/sqrt(nbDiv));
@@ -23,7 +24,7 @@ void DivImage::division() {
             Point randomCooDiv = randomPlantGerm(Point(x, y));
             std::cout<<"init germ at : "<<randomCooDiv<<'\n';
             id++;
-            listRegion.emplace_back(Region(image,randomCooDiv, id, image->at<uchar>(y, x), 60));
+            listRegion.emplace_back(Region(image,randomCooDiv, id, image->at<Vec3b>(y, x), 50));
         }
     }
 }

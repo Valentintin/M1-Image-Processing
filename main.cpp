@@ -1,5 +1,6 @@
 #include <iostream>
 #include <opencv2/core.hpp>
+#include <opencv2/core/hal/interface.h>
 #include <opencv2/highgui.hpp>
 #include <vector>
 #include "DivImage.hpp"
@@ -9,11 +10,11 @@
 using namespace cv;
 int main()
 {
-    std::string image_path = "img/art.png";
+    std::string image_path = "img/lena_color.png";
     Mat img = imread(image_path, IMREAD_COLOR);
     std::cout<<"height : "<<img.size().height<<", width : "<<img.size().width<<'\n';
 
-    DivImage* divImage = new DivImage(&img, 9);
+    DivImage* divImage = new DivImage(&img, 64);
 
     divImage->division();
     std::vector<Region> listRegion = divImage->getListRegion();
@@ -24,7 +25,9 @@ int main()
 
     Fusion* fusion = new Fusion(listRegion, &img);
 
-    //fusion->getFusion();
+    std::cout<<"ho \n";
+    fusion->getFusion();
+    std::cout<<"hoho \n";
 
     imshow("Display window 2", img);
     int k = waitKey(0); // Wait for a keystroke in the window
