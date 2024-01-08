@@ -16,21 +16,26 @@ class Fusion{
          * 
          * @param listRegion_ 
          */
-        Fusion(std::vector<Region> listRegion_, int nbRegion);
+        Fusion(std::vector<Region> listRegion_, Mat * image_);
 
 
         /**
          * @brief function for fusion all region passed in the object.
          * 
-         * @return Mat 
+         * @return Mat
          */
-        Mat getFusion();
+        void getFusion();
 
 
     private:
-        Mat fusioned;
+        /**
+         * @brief give a random color for a region.
+         * 
+         */
+        void randomIntensity();
+        std::vector<Scalar> randomIntensityTab;
+        Mat * fusioned;
         std::vector<Region> listRegion;
-        int nbRegion;
 };
 
 #endif
