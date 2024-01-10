@@ -32,25 +32,25 @@ bool Region::cond_color(const Point & point) {
 }
     
 bool Region::cond_y_sud(const Point & point) {
-    if (point.y < image->size().height-1 && point.y >= 0) {
+    if (point.y < image->size().height-1) {
         return true;
     }
     return false;
 }
 bool Region::cond_y_nord(const Point & point) {
-    if (point.y > 0 && point.y < image->size().height) {
+    if (point.y > 0) {
         return true;
     }
     return false;
 }
 bool Region::cond_x_est(const Point & point) {
-    if (point.x < image->size().width-1 && point.x >= 0) {
+    if (point.x < image->size().width-1) {
         return true;
     }
     return false;
 }
 bool Region::cond_x_ouest(const Point & point) {
-    if (point.x > 0 && point.x < image->size().width) {
+    if (point.x > 0) {
         return true;
     }
     return false;
@@ -66,7 +66,7 @@ void Region::pathGerm() {
     while(!Pile.empty()) {
 
         //on dépile
-        std::cout<<"dépile "<<Pile.top().x<<','<<Pile.top().y<<'\n';
+        //std::cout<<"dépile "<<Pile.top().x<<','<<Pile.top().y<<'\n';
         indTab[Pile.top().x * image->size().height + Pile.top().y] = id;
         Point temp(Pile.top());
         Pile.pop();
@@ -80,6 +80,22 @@ void Region::pathGerm() {
             //std::cout<<"cond_y_sud ";
         }
 
+        //Y+1 && X+1
+        if (cond_y_sud(temp) && cond_x_est(temp)) {
+            Point SudEst = Point(temp.y+1, temp.x+1);
+            if (cond_color(SudEst)) {
+                Pile.push(SudEst);
+            }
+        }
+
+        //Y+1 && X-1
+        if (cond_y_sud(temp) && cond_x_ouest(temp)) {
+            Point SudOuest = Point(temp.y+1, temp.x-1);
+            if (cond_color(SudOuest)) {
+                Pile.push(SudOuest);
+            }
+        }
+
         //Y-1
         if (cond_y_nord(temp)) {
             Point Ynord = Point(temp.y-1, temp.x);
@@ -87,6 +103,22 @@ void Region::pathGerm() {
                 Pile.push(Ynord);
             }
             //std::cout<<"cond_y_nord ";
+        }
+
+        //Y-1 && X+1
+        if (cond_y_nord(temp) && cond_x_est(temp)) {
+            Point NordEst = Point(temp.y-1, temp.x+1);
+            if (cond_color(NordEst)) {
+                Pile.push(NordEst);
+            }
+        }
+
+        //Y-1 && X-1
+        if (cond_y_nord(temp) && cond_x_ouest(temp)) {
+            Point NordOuest = Point(temp.y-1, temp.x-1);
+            if (cond_color(NordOuest)) {
+                Pile.push(NordOuest);
+            }
         }
 
         //X+1

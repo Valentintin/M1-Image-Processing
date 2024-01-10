@@ -10,7 +10,6 @@ Fusion::Fusion( Mat * image_, int* indTab_, const int & nbRegion_) : fusioned(im
 }
 
 Fusion::~Fusion() {
-    delete [] indTab;
     nbRegion = 0;
 }
 
@@ -20,8 +19,8 @@ Mat Fusion::getFusion() {
     for (int x = 0; x<fusioned->size().width; x++) {
         for (int y = 0; y<fusioned->size().height; y++) {
             if (indTab[x * fusioned->size().height + y] > 0) {
-                std::cout<<"heeee \n";
-                fusioned->at<Vec3b>(y, x) = randomIntensityTab[indTab[x * fusioned->size().height + y]-1];
+                //std::cout<<indTab[x * fusioned->size().height + y] <<"\n";
+                fusioned->at<Vec3b>(Point(x, y)) = randomIntensityTab[indTab[x * fusioned->size().height + y]-1];
             }
         }
     }

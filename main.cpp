@@ -10,7 +10,7 @@
 using namespace cv;
 int main()
 {
-    std::string image_path = "img/lena_color.png";
+    std::string image_path = "img/t1.png";
     Mat img = imread(image_path, IMREAD_COLOR);
     std::cout<<"height : "<<img.size().height<<", width : "<<img.size().width<<'\n';
 
@@ -21,11 +21,11 @@ int main()
     divImage->division(indTab);
     std::vector<Region> listRegion = divImage->getListRegion();
 
+    Fusion* fusion = new Fusion(&img, indTab, listRegion.size());
+
     for (int i = 0; i<listRegion.size(); i++) {
         listRegion[i].pathGerm();
     }
-
-    Fusion* fusion = new Fusion(&img, indTab, listRegion.size());
 
     std::cout<<"ho \n";
     Mat img2 = fusion->getFusion();
@@ -35,6 +35,6 @@ int main()
     int k = waitKey(0); // Wait for a keystroke in the window
     delete divImage;
     delete [] indTab;
-    //delete fusion;
+    delete fusion;
     return 0;
 }
