@@ -42,7 +42,7 @@ class Fusion {
         std::vector<Vec3b> randomIntensityTab;
         int nbRegion;
         int * indTab;
-        Mat * fusioned;
+        Mat fusioned;
 };
 
 #endif

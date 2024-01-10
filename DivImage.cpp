@@ -3,7 +3,7 @@
 #include <opencv2/core/matx.hpp>
 
 DivImage::DivImage(Mat * img, const int & nbDiv_): image(img), nbDiv(nbDiv_) {
-    divSize = new Size(image->size().height/sqrt(nbDiv), image->size().width/sqrt(nbDiv));
+    divSize = new Size(image->rows/sqrt(nbDiv), image->cols/sqrt(nbDiv));
     listRegion.reserve(nbDiv);
     srand(time(nullptr));
 }
@@ -18,8 +18,8 @@ void DivImage::division(int* indTab) {
     listRegion.clear();
     listRegion.reserve(nbDiv);
     int id = 0;
-    for (int x = 0; x + divSize->width <= image->size().width; x = x + divSize->width) {
-        for (int y = 0; y + divSize->height <= image->size().height; y = y + divSize->height) {
+    for (int x = 0; x + divSize->height <= image->cols; x = x + divSize->height) {
+        for (int y = 0; y + divSize->width <= image->rows; y = y + divSize->width) {
             Point randomCooDiv = randomPlantGerm(Point(x, y));
             std::cout<<"init germ at : "<<randomCooDiv<<'\n';
             id++;
@@ -33,7 +33,7 @@ std::vector<Region> DivImage::getListRegion() {
 }
 
 Point DivImage::randomPlantGerm(Point cooDiv) {
-    int randX = rand() % (divSize->width);
-    int randY = rand() % (divSize->height);
+    int randX = rand() % (divSize->height);
+    int randY = rand() % (divSize->width);
     return Point(randX + cooDiv.x, randY + cooDiv.y);
 }

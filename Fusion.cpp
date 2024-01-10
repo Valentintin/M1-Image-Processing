@@ -5,7 +5,7 @@
 #include <opencv2/core/types.hpp>
 #include <iostream>
 
-Fusion::Fusion( Mat * image_, int* indTab_, const int & nbRegion_) : fusioned(image_) , indTab(indTab_), nbRegion(nbRegion_){
+Fusion::Fusion( Mat * image_, int* indTab_, const int & nbRegion_) : fusioned(image_->clone()) , indTab(indTab_), nbRegion(nbRegion_){
     srand(time(nullptr));
 }
 
@@ -16,15 +16,15 @@ Fusion::~Fusion() {
 Mat Fusion::getFusion() {
     randomIntensity();
     std::cout<<"he \n";
-    for (int x = 0; x<fusioned->size().width; x++) {
-        for (int y = 0; y<fusioned->size().height; y++) {
-            if (indTab[x * fusioned->size().height + y] > 0) {
+    for (int x = 0; x<fusioned.cols; x++) {
+        for (int y = 0; y<fusioned.rows; y++) {
+            if (indTab[x * fusioned.size().height + y] > 0) {
                 //std::cout<<indTab[x * fusioned->size().height + y] <<"\n";
-                fusioned->at<Vec3b>(Point(x, y)) = randomIntensityTab[indTab[x * fusioned->size().height + y]-1];
+                fusioned.at<Vec3b>(Point(x, y)) = randomIntensityTab[indTab[x * fusioned.size().height + y]-1];
             }
         }
     }
-    return *fusioned;
+    return fusioned;
 }
 
 void Fusion::randomIntensity() {

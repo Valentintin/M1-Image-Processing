@@ -10,11 +10,11 @@
 using namespace cv;
 int main()
 {
-    std::string image_path = "img/t1.png";
+    std::string image_path = "img/t4.jpg";
     Mat img = imread(image_path, IMREAD_COLOR);
     std::cout<<"height : "<<img.size().height<<", width : "<<img.size().width<<'\n';
 
-    DivImage* divImage = new DivImage(&img, 64);
+    DivImage* divImage = new DivImage(&img, 128);
 
     int* indTab = new int[img.size().height * img.size().width]{0};
 
@@ -31,10 +31,11 @@ int main()
     Mat img2 = fusion->getFusion();
     std::cout<<"hoho \n";
 
+    imshow("Display window", img);
     imshow("Display window 2", img2);
     int k = waitKey(0); // Wait for a keystroke in the window
     delete divImage;
-    delete [] indTab;
     delete fusion;
+    delete [] indTab;
     return 0;
 }
