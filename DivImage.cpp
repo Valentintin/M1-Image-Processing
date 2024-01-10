@@ -14,17 +14,16 @@ DivImage::~DivImage() {
     nbDiv = 0;
 }
 
-void DivImage::division() {
+void DivImage::division(int* indTab) {
     listRegion.clear();
     listRegion.reserve(nbDiv);
-
     int id = 0;
     for (int x = 0; x + divSize->width <= image->size().width; x = x + divSize->width) {
         for (int y = 0; y + divSize->height <= image->size().height; y = y + divSize->height) {
             Point randomCooDiv = randomPlantGerm(Point(x, y));
             std::cout<<"init germ at : "<<randomCooDiv<<'\n';
             id++;
-            listRegion.emplace_back(Region(image,randomCooDiv, id, image->at<Vec3b>(y, x), 50));
+            listRegion.emplace_back(Region(image,indTab, randomCooDiv, id, image->at<Vec3b>(y, x), 50));
         }
     }
 }
