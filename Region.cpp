@@ -18,15 +18,13 @@ Region::~Region() {
 
 bool Region::cond_color(const Point & point) {
     Vec3b color = image->at<Vec3b>(point);
-    if (color.val[0] >= 0
-        && color.val[1] >= 0
-        && color.val[2] >= 0
-        && color.val[0] <= intensity.val[0]+seuil
+    if (color.val[0] <= intensity.val[0]+seuil
         && color.val[0] >= intensity.val[0]-seuil
         && color.val[1] <= intensity.val[1]+seuil
         && color.val[1] >= intensity.val[1]-seuil
         && color.val[2] <= intensity.val[2]+seuil
-        && color.val[2] >= intensity.val[2]-seuil) {
+        && color.val[2] >= intensity.val[2]-seuil
+        && indTab[point.x * image->size().height + point.y] == 0) {
             //std::cout<<"bonne couleur \n";
             return true;
     }
@@ -64,12 +62,12 @@ void Region::pathGerm() {
     Pile.push(germ);//empile le cas init
 
     //std::cout<<"before while ";
-
+    
     while(!Pile.empty()) {
 
         //on dépile
-        //std::cout<<"dépile "<<Pile.top().x<<','<<Pile.top().y<<'\n';
-        image->at<Vec3b>(Pile.top().y, Pile.top().x) = Vec3b(-id, -id, -id);
+        std::cout<<"dépile "<<Pile.top().x<<','<<Pile.top().y<<'\n';
+        indTab[Pile.top().x * image->size().height + Pile.top().y] = id;
         Point temp(Pile.top());
         Pile.pop();
 

@@ -16,7 +16,7 @@ class Fusion {
          * 
          * @param listRegion_ 
          */
-        Fusion(Mat * image_);
+        Fusion(Mat * image_, int* indTab_, const int & nbRegion_);
 
         /**
          * @brief Destroy the Fusion object
@@ -29,7 +29,7 @@ class Fusion {
          * 
          * @return Mat
          */
-        void getFusion();
+        Mat getFusion();
 
     private:
 
@@ -41,7 +41,7 @@ class Fusion {
 
         std::vector<Vec3b> randomIntensityTab;
         int nbRegion;
-        int * tabInd;
+        int * indTab;
         Mat * fusioned;
 };
 
