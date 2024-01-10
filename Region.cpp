@@ -1,9 +1,6 @@
 #include "Region.hpp"
-#include <opencv2/core/hal/interface.h>
-#include <opencv2/core/matx.hpp>
-#include <iostream>
 #include <stack>
-#include <opencv2/core/types.hpp>
+
 
 
 Region::Region(Mat * image_, int * indTab_, const Point & germInit, const int & id_, const Vec3b & intensity_, const int & seuil_)  : 

@@ -4,13 +4,15 @@
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
 #include <vector>
+#include <opencv2/core/hal/interface.h>
+#include <opencv2/core/matx.hpp>
+#include <opencv2/core/types.hpp>
 
 using namespace cv;
 
 class Fusion {
     public:
 
-        
         /**
          * @brief Construct a new Fusion object.
          * 

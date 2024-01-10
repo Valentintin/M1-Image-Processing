@@ -1,9 +1,7 @@
 #include "Fusion.hpp"
-#include <cstdlib>
-#include <opencv2/core/hal/interface.h>
-#include <opencv2/core/matx.hpp>
-#include <opencv2/core/types.hpp>
 #include <iostream>
+#include <cstdlib>
+
 
 Fusion::Fusion( Mat * image_, int* indTab_, const int & nbRegion_) : fusioned(image_->clone()) , indTab(indTab_), nbRegion(nbRegion_){
     srand(time(nullptr));

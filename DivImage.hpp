@@ -1,12 +1,12 @@
 #ifndef _DIVIMAGE
 #define _DIVIMAGE
 
+#include "Region.hpp"
 #include <opencv2/core.hpp>
 #include <opencv2/core/types.hpp>
 #include <opencv2/highgui.hpp>
 #include <vector>
-#include "Region.hpp"
-#include <iostream>
+#include <opencv2/core/matx.hpp>
 
 using namespace cv;
 

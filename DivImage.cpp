@@ -1,6 +1,6 @@
 #include "DivImage.hpp"
-#include "Region.hpp"
-#include <opencv2/core/matx.hpp>
+#include <iostream>
+
 
 DivImage::DivImage(Mat * img, const int & nbDiv_): image(img), nbDiv(nbDiv_) {
     divSize = new Size(image->rows/sqrt(nbDiv), image->cols/sqrt(nbDiv));

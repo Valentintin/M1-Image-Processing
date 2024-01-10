@@ -1,11 +1,13 @@
 #ifndef _REGION
 #define _REGION
-#include "Fusion.hpp"
 #include <opencv2/core.hpp>
 #include <opencv2/core/types.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/core/types.hpp>
 #include <vector>
+#include <opencv2/core/hal/interface.h>
+#include <opencv2/core/matx.hpp>
+#include <opencv2/core/types.hpp>
 
 using namespace cv;
 
