@@ -5,8 +5,15 @@
 #include <opencv2/core/types.hpp>
 #include <iostream>
 
-Fusion::Fusion(std::vector<Region> listRegion_, Mat * image_) : listRegion(listRegion_), fusioned(image_) {
-        srand(time(nullptr));
+Fusion::Fusion( Mat * image_) : fusioned(image_) {
+    tabInd = new int[image_->size().height*image_->size().width]();
+    nbRegion = 0;
+    srand(time(nullptr));
+}
+
+Fusion::~Fusion() {
+    delete [] tabInd;
+    nbRegion = 0;
 }
 
 void Fusion::getFusion() {
@@ -25,8 +32,8 @@ void Fusion::getFusion() {
 
 void Fusion::randomIntensity() {
     randomIntensityTab.clear();
-    randomIntensityTab.reserve(listRegion.size());
-    for (int i = 0; i<listRegion.size(); i++) {
+    randomIntensityTab.reserve(nbRegion);
+    for (int i = 0; i<nbRegion; i++) {
         int blue = rand() % 255;
         int green = rand() % 255;
         int red = rand() % 255;

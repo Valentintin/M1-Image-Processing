@@ -35,7 +35,7 @@ class DivImage {
          * @brief divise the image in n for create Region
          * 
          */
-        void division();
+        void division(int* indTab);
 
         /**
          * @brief Get the List Region object

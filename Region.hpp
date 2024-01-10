@@ -1,5 +1,6 @@
 #ifndef _REGION
 #define _REGION
+#include "Fusion.hpp"
 #include <opencv2/core.hpp>
 #include <opencv2/core/types.hpp>
 #include <opencv2/highgui.hpp>
@@ -16,17 +17,11 @@ class Region{
     public:
 
         /**
-         * @brief Construct a default new Region object
-         * 
-         */
-        Region();
-
-        /**
          * @brief Construct a new Region object
          * 
          * @param Region 
          */
-        Region(Mat * image_, const Point & germInit, const int & id_, const Vec3b & intensity_, const int & seuil_);
+        Region(Mat * image_, int* indTab_, const Point & germInit, const int & id_, const Vec3b & intensity_, const int & seuil_);
 
         /**
          * @brief Destroy the Region object
@@ -52,12 +47,13 @@ class Region{
          * @return false 
          */
         bool cond_color(const Point & point);
-
         bool cond_x_est(const Point & point);
         bool cond_x_ouest(const Point & point);
         bool cond_y_sud(const Point & point);
         bool cond_y_nord(const Point & point);
+
         Point germ;
+        int* indTab;
         std::vector<Point> refused;
         int seuil;
         Vec3b intensity; //couleur de germe initial

@@ -16,22 +16,25 @@ int main()
 
     DivImage* divImage = new DivImage(&img, 64);
 
-    divImage->division();
+    int* indTab = new int[img.size().height * img.size().width];
+
+    divImage->division(indTab);
     std::vector<Region> listRegion = divImage->getListRegion();
 
     for (int i = 0; i<listRegion.size(); i++) {
         listRegion[i].pathGerm();
     }
 
-    Fusion* fusion = new Fusion(listRegion, &img);
+    //Fusion* fusion = new Fusion(listRegion, &img);
 
     std::cout<<"ho \n";
-    fusion->getFusion();
+    //fusion->getFusion();
     std::cout<<"hoho \n";
 
     imshow("Display window 2", img);
     int k = waitKey(0); // Wait for a keystroke in the window
     delete divImage;
-    delete fusion;
+    delete [] indTab;
+    //delete fusion;
     return 0;
 }
