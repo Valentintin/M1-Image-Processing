@@ -15,13 +15,13 @@ Fusion::~Fusion() {
 }
 
 Mat Fusion::getFusion() {
-    //randomIntensity();
+    randomIntensity();
     std::cout<<"he \n";
     for (int x = 0; x<fusioned->size().width; x++) {
         for (int y = 0; y<fusioned->size().height; y++) {
             if (indTab[x * fusioned->size().height + y] > 0) {
                 std::cout<<"heeee \n";
-                fusioned->at<Vec3b>(y, x) = Vec3b(0, 255, 0);
+                fusioned->at<Vec3b>(y, x) = randomIntensityTab[indTab[x * fusioned->size().height + y]-1];
             }
         }
     }
