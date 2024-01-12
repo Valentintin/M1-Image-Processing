@@ -2,7 +2,7 @@
 #include <iostream>
 
 
-DivImage::DivImage(Mat * img, const int & nbDiv_): image(img), nbDiv(nbDiv_) {
+DivImage::DivImage(Mat * img, const int & nbDiv_, const int & seuil_): image(img), nbDiv(nbDiv_), seuil(seuil_) {
     divSize = new Size(image->rows/sqrt(nbDiv), image->cols/sqrt(nbDiv));
     listRegion.reserve(nbDiv);
     srand(time(nullptr));

@@ -8,20 +8,22 @@
 #include "Region.hpp"
 
 using namespace cv;
+
 int main()
 {
-    std::string image_path = "img/t4.jpg";
+    std::string image_path = "img/t1.png";
     Mat img = imread(image_path, IMREAD_COLOR);
     std::cout<<"height : "<<img.size().height<<", width : "<<img.size().width<<'\n';
 
-    DivImage* divImage = new DivImage(&img, 128);
+    int seuil = 40;
+    DivImage* divImage = new DivImage(&img, 600, seuil);
 
     int* indTab = new int[img.size().height * img.size().width]{0};
 
     divImage->division(indTab);
     std::vector<Region> listRegion = divImage->getListRegion();
 
-    Fusion* fusion = new Fusion(&img, indTab, listRegion.size());
+    Fusion* fusion = new Fusion(&img, indTab, listRegion, seuil/3);
 
     for (int i = 0; i<listRegion.size(); i++) {
         listRegion[i].pathGerm();
@@ -33,6 +35,7 @@ int main()
 
     imshow("Display window", img);
     imshow("Display window 2", img2);
+    imwrite( "img/out.jpg", img2 );
     int k = waitKey(0); // Wait for a keystroke in the window
     delete divImage;
     delete fusion;

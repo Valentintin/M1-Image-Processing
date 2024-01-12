@@ -7,6 +7,8 @@
 #include <opencv2/core/hal/interface.h>
 #include <opencv2/core/matx.hpp>
 #include <opencv2/core/types.hpp>
+#include <stack>
+#include "Region.hpp"
 
 using namespace cv;
 
@@ -18,7 +20,7 @@ class Fusion {
          * 
          * @param listRegion_ 
          */
-        Fusion(Mat * image_, int* indTab_, const int & nbRegion_);
+        Fusion(Mat * image_, int* indTab_, const std::vector<Region> listRegion_, const int & seuil_);
 
         /**
          * @brief Destroy the Fusion object
@@ -32,17 +34,40 @@ class Fusion {
          * @return Mat
          */
         Mat getFusion();
-
+        
+        std::stack<int> setOfGroup;
     private:
 
         /**
-         * @brief give a random color for a region.
+         * @brief fill the tab with random color .
          * 
          */
         void randomIntensity();
 
+        /**
+         * @brief find Recurcive version for fusion Region.
+         * 
+         * @param ind 
+         * @param grp 
+         * @param randomIntensity 
+         */
+        void findColorFusionRec(int ind, std::stack<int> grp, Vec3b randomIntensity, Vec3b referenceColor);
+
+        /**
+         * @brief call Recurcive fusion.
+         * 
+         */
+        void findColorFusion();
+
+        /**
+         * @brief return a random color
+         * 
+         * @return Vec3b 
+         */
+        Vec3b randomOneIntensity();
+        int seuil;
         std::vector<Vec3b> randomIntensityTab;
-        int nbRegion;
+        std::vector<Region> listRegion;
         int * indTab;
         Mat fusioned;
 };

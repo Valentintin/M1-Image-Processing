@@ -23,7 +23,7 @@ class DivImage {
          * @param img 
          * @param nbDiv_ 
          */
-        DivImage(Mat * img, const int & nbDiv_);
+        DivImage(Mat * img, const int & nbDiv_, const int & seuil_);
 
         /**
          * @brief Destroy the Div Region object
@@ -56,6 +56,7 @@ class DivImage {
         Point randomPlantGerm(Point cooDiv);
         Size* divSize;
         std::vector<Region> listRegion;
+        int seuil;
         int nbDiv;
 };
 
