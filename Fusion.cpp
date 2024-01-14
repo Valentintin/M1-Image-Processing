@@ -1,6 +1,7 @@
 #include "Fusion.hpp"
 #include "TableThreadAccess.hpp"
 #include <iostream>
+#include <opencv2/core.hpp>
 
 
 Fusion::Fusion( Mat * image_, TableThreadAccess* tableThreadAccess_, const std::vector<Region> listRegion_, const int & seuil_) : fusioned(image_->clone()), tableThreadAccess(tableThreadAccess_), listRegion(listRegion_), seuil(seuil_) {
@@ -39,23 +40,29 @@ void Fusion::findColorFusion() {
         if (randomIntensityTab[i] == Vec3b(0, 0, 0)) { //color for Ri ins't already affected
             //findColorFusionRec(i+1, listRegion[i].getGroup(), randomOneIntensity(), listRegion[i].getIntensity());
             Vec3b randomIntensity = randomOneIntensity();
-            for (int ind : listRegion[i].getGroup()) {
-                if (randomIntensityTab[ind-1] != Vec3b(0, 0, 0)) {
-                    std::cout<<"r"<<ind<<" déjà init,     ";
-                } else if ( listRegion[ind-1].compare_color(listRegion[i].getIntensity(), seuil) ) {
-                    randomIntensityTab[ind-1] = randomIntensity;
-                    std::cout<<"r"<<ind<<" coloré,   ";
-                } else {
-                    std::cout<<"r"<<ind<<"pas coloré,    ";
+            std::stack<std::set<int>> rec;
+            rec.push(listRegion[i].getGroup());
+            while (!rec.empty()) {
+                for (int ind : rec.top()) {
+                    if (randomIntensityTab[ind-1] != Vec3b(0, 0, 0)) {
+                        std::cout<<"r"<<ind<<" déjà init,    ";
+                    } else if ( listRegion[ind-1].compare_color(listRegion[i].getIntensity(), seuil) ) {
+                        randomIntensityTab[ind-1] = randomIntensity;
+                        std::cout<<"r"<<ind<<" coloré,    ";
+                        rec.push(listRegion[ind-1].getGroup());
+                    } else {
+                        std::cout<<"r"<<ind<<" pas coloré,    ";
+                    }
                 }
+                rec.pop();
             }
         }
     }
-} 
+}
 
 Mat Fusion::getFusion() {
-    findColorFusion();
-    //randomIntensity(); //sans fusion
+    //findColorFusion();
+    randomIntensity(); //sans fusion
     std::cout<<"he \n";
     for (int x = 0; x<fusioned.cols; x++) {
         for (int y = 0; y<fusioned.rows; y++) {

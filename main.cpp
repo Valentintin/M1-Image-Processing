@@ -13,12 +13,12 @@ using namespace cv;
 
 int main()
 {
-    std::string image_path = "img/t1.png";
+    std::string image_path = "img/lena_color.png";
     Mat img = imread(image_path, IMREAD_COLOR);
     std::cout<<"height : "<<img.size().height<<", width : "<<img.size().width<<'\n';
 
-    int seuil = 40;
-    DivImage* divImage = new DivImage(&img, 124, seuil);
+    int seuil = 50;
+    DivImage* divImage = new DivImage(&img, 256, seuil);
 
     int* indTab = new int[img.size().height * img.size().width]();
 

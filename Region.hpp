@@ -42,6 +42,8 @@ class Region{
 
         std::set<int> getGroup();
 
+        void mergeGroup(std::set<int> group_);
+
         Vec3b getIntensity();
 
         bool compare_color(Vec3b color, const int & seuil);

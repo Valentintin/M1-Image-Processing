@@ -19,6 +19,10 @@ std::set<int> Region::getGroup() {
     return group;
 }
 
+void Region::mergeGroup(std::set<int> group_) {
+    group.merge(group_);
+}
+
 Vec3b Region::getIntensity() {
     return intensity;
 }
