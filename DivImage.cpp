@@ -1,4 +1,5 @@
 #include "DivImage.hpp"
+#include "TableThreadAccess.hpp"
 #include <iostream>
 
 
@@ -14,7 +15,7 @@ DivImage::~DivImage() {
     nbDiv = 0;
 }
 
-void DivImage::division(int* indTab) {
+void DivImage::division(TableThreadAccess* tableThreadAccess) {
     listRegion.clear();
     listRegion.reserve(nbDiv);
     int id = 0;
@@ -23,7 +24,7 @@ void DivImage::division(int* indTab) {
             Point randomCooDiv = randomPlantGerm(Point(x, y));
             std::cout<<"init germ at : "<<randomCooDiv<<'\n';
             id++;
-            listRegion.emplace_back(Region(image,indTab, randomCooDiv, id, image->at<Vec3b>(Point(x, y)), 40));
+            listRegion.emplace_back(Region(image,tableThreadAccess, randomCooDiv, id, image->at<Vec3b>(Point(x, y)), 40));
         }
     }
 }
