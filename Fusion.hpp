@@ -51,7 +51,7 @@ class Fusion {
          * @param grp 
          * @param randomIntensity 
          */
-        void findColorFusionRec(int ind, std::stack<int> grp, Vec3b randomIntensity, Vec3b referenceColor);
+        void findColorFusionRec(int ind, std::set<int> grp, Vec3b randomIntensity, Vec3b referenceColor);
 
         /**
          * @brief call Recurcive fusion.

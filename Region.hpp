@@ -5,6 +5,7 @@
 #include <opencv2/highgui.hpp>
 #include <opencv2/core/types.hpp>
 #include <stack>
+#include <set>
 #include <vector>
 #include <opencv2/core/hal/interface.h>
 #include <opencv2/core/matx.hpp>
@@ -38,7 +39,7 @@ class Region{
          */
         void pathGerm();
 
-        std::stack<int> getGroup();
+        std::set<int> getGroup();
 
         Vec3b getIntensity();
 
@@ -61,6 +62,7 @@ class Region{
         bool cond_x_ouest(const Point & point);
         bool cond_y_sud(const Point & point);
         bool cond_y_nord(const Point & point);
+        void fillGroup(const Point & point);
 
         Point germ;
         int* indTab;
@@ -68,7 +70,7 @@ class Region{
         int seuil;
         Vec3b intensity; //couleur de germe initial
         Vec3b randomFinalColor;
-        std::stack<int> group;
+        std::set<int> group;
 };
 
 #endif

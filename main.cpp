@@ -16,18 +16,17 @@ int main()
     std::cout<<"height : "<<img.size().height<<", width : "<<img.size().width<<'\n';
 
     int seuil = 40;
-    DivImage* divImage = new DivImage(&img, 600, seuil);
+    DivImage* divImage = new DivImage(&img, 124, seuil);
 
     int* indTab = new int[img.size().height * img.size().width]{0};
 
     divImage->division(indTab);
     std::vector<Region> listRegion = divImage->getListRegion();
-
-    Fusion* fusion = new Fusion(&img, indTab, listRegion, seuil/3);
-
     for (int i = 0; i<listRegion.size(); i++) {
         listRegion[i].pathGerm();
     }
+
+    Fusion* fusion = new Fusion(&img, indTab, listRegion, seuil);
 
     std::cout<<"ho \n";
     Mat img2 = fusion->getFusion();

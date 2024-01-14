@@ -13,23 +13,23 @@ Fusion::Fusion( Mat * image_, int* indTab_, const std::vector<Region> listRegion
 Fusion::~Fusion() {
 }
 
-void Fusion::findColorFusionRec(int ind, std::stack<int> grp, Vec3b randomIntensity, Vec3b referenceColor) {
+/* void Fusion::findColorFusionRec(int ind, std::set<int> grp, Vec3b randomIntensity, Vec3b referenceColor) {
+    grp.pop();
     if (randomIntensityTab[ind-1] != Vec3b(0, 0, 0)) {
         std::cout<<"stop déjà init "<<ind<<'\n';
         return;
     }
     if ( listRegion[ind-1].compare_color(referenceColor, seuil) ) {
         randomIntensityTab[ind-1] = randomIntensity;
-        std::cout<<"région"<<ind<<" coloré \n";
+        std::cout<<"r"<<ind<<" coloré,   ";
     }
     if (!grp.empty()) {
-        int temp = grp.top();
-        grp.pop();
-        if (!grp.empty()) {
-            findColorFusionRec(grp.top(), grp, randomIntensity, referenceColor);
-        }
+        findColorFusionRec(grp.top(), grp, randomIntensity, referenceColor);
+    } else {
+        std::cout<<"fin grp \n";
     }
-}
+} */
+
 
 void Fusion::findColorFusion() {
     randomIntensityTab.clear();
@@ -38,10 +38,20 @@ void Fusion::findColorFusion() {
         randomIntensityTab[i] = Vec3b(0, 0, 0);
     }
     for (int i = 0; i<listRegion.size(); i++) {
-        std::cout<<"\n \n Colorisation de la région "<<i+1<<'\n';
+        std::cout<<"\n Colorisation de la région "<<i+1<<":    ";
         if (randomIntensityTab[i] == Vec3b(0, 0, 0)) { //color for Ri ins't already affected
-            findColorFusionRec(i+1, listRegion[i].getGroup(),
-                               randomOneIntensity(), listRegion[i].getIntensity());
+            //findColorFusionRec(i+1, listRegion[i].getGroup(), randomOneIntensity(), listRegion[i].getIntensity());
+            Vec3b randomIntensity = randomOneIntensity();
+            for (int ind : listRegion[i].getGroup()) {
+                if (randomIntensityTab[ind-1] != Vec3b(0, 0, 0)) {
+                    std::cout<<"r"<<ind<<" déjà init,     ";
+                } else if ( listRegion[ind-1].compare_color(listRegion[i].getIntensity(), seuil) ) {
+                    randomIntensityTab[ind-1] = randomIntensity;
+                    std::cout<<"r"<<ind<<" coloré,   ";
+                } else {
+                    std::cout<<"r"<<ind<<"pas coloré,    ";
+                }
+            }
         }
     }
 } 

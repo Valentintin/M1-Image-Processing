@@ -1,20 +1,21 @@
 #include "Region.hpp"
 #include <opencv2/core/matx.hpp>
 #include <stack>
+#include <iostream>
 
 
 
 Region::Region(Mat * image_, int * indTab_, const Point & germInit, const int & id_, const Vec3b & intensity_, const int & seuil_)  : 
 image(image_), germ(germInit), id(id_), intensity(intensity_), seuil(seuil_), indTab(indTab_){
     refused.clear();
-    group.push(id);
+    group.emplace(id);
 }
 
 Region::~Region() {
 
 }
 
-std::stack<int> Region::getGroup() {
+std::set<int> Region::getGroup() {
     return group;
 }
 
@@ -23,15 +24,12 @@ Vec3b Region::getIntensity() {
 }
 
 bool Region::compare_color(Vec3b color, const int & seuil_) {
-    if (color.val[0] <= intensity.val[0]+seuil_
-        && color.val[0] >= intensity.val[0]-seuil_
-        && color.val[1] <= intensity.val[1]+seuil_
-        && color.val[1] >= intensity.val[1]-seuil_
-        && color.val[2] <= intensity.val[2]+seuil_
-        && color.val[2] >= intensity.val[2]-seuil_) {
-            //std::cout<<"bonne couleur \n";
-            return true;
+    for (int i = 0; i < 3; ++i) {
+        if (std::abs(color.val[i] - intensity.val[i]) > seuil) {
+            return false;
+        }
     }
+    return true;
     return false;
 }
 
@@ -72,9 +70,16 @@ bool Region::cond_x_ouest(const Point & point) {
     return false;
 }
 
+void Region::fillGroup(const Point & point) {
+    if (indTab[point.x * image->size().height + point.y] > 0) {
+        //std::cout<<"ajout dans grp"<<id<<" de "<<indTab[point.x * image->size().height + point.y]<<'\n';
+        group.emplace(indTab[point.x * image->size().height + point.y]);
+    }
+}
+
 void Region::pathGerm() {
     //pile init avec germ de base
-    std::stack<Point> Pile;  
+    std::stack<Point> Pile; 
     Pile.push(germ);//empile le cas init
 
     //std::cout<<"before while ";
@@ -85,8 +90,6 @@ void Region::pathGerm() {
         //std::cout<<"dépile "<<Pile.top().x<<','<<Pile.top().y<<'\n';
         if (indTab[Pile.top().x * image->size().height + Pile.top().y] == 0) {
             indTab[Pile.top().x * image->size().height + Pile.top().y] = id;
-        } else {
-            group.push(indTab[Pile.top().x * image->size().height + Pile.top().y]);
         }
         Point temp(Pile.top());
         Pile.pop();
@@ -94,10 +97,10 @@ void Region::pathGerm() {
         //Y+1
         if (cond_y_sud(temp)) {
             Point Ysud = Point(temp.x, temp.y+1);
-            if (cond_color(Ysud)) {
-                if (cond_indTab(Ysud)) {
-                    Pile.push(Ysud);
-                }
+            if (cond_color(Ysud) && cond_indTab(Ysud)) {
+                Pile.push(Ysud);
+            } else {
+                fillGroup(Ysud);
             }
             //std::cout<<"cond_y_sud ";
         }
@@ -105,30 +108,30 @@ void Region::pathGerm() {
         //Y+1 && X+1
         if (cond_y_sud(temp) && cond_x_est(temp)) {
             Point SudEst = Point(temp.x+1, temp.y+1);
-            if (cond_color(SudEst)) {
-                if (cond_indTab(SudEst)) {
-                    Pile.push(SudEst);
-                }
+            if (cond_color(SudEst) && cond_indTab(SudEst)) {
+                Pile.push(SudEst);
+            } else {
+                fillGroup(SudEst);
             }
         }
 
         //Y+1 && X-1
         if (cond_y_sud(temp) && cond_x_ouest(temp)) {
             Point SudOuest = Point(temp.x-1, temp.y+1);
-            if (cond_color(SudOuest)) {
-                if (cond_indTab(SudOuest)) {
-                    Pile.push(SudOuest);
-                }
+            if (cond_color(SudOuest) && cond_indTab(SudOuest)) {
+                Pile.push(SudOuest);
+            } else {
+                fillGroup(SudOuest);
             }
         }
 
         //Y-1
         if (cond_y_nord(temp)) {
             Point Ynord = Point(temp.x, temp.y-1);
-            if (cond_color(Ynord)) {
-                if (cond_indTab(Ynord)) {
-                    Pile.push(Ynord);
-                }
+            if (cond_color(Ynord) && cond_indTab(Ynord)) {
+                Pile.push(Ynord);
+            } else {
+                fillGroup(Ynord);
             }
             //std::cout<<"cond_y_nord ";
         }
@@ -136,30 +139,30 @@ void Region::pathGerm() {
         //Y-1 && X+1
         if (cond_y_nord(temp) && cond_x_est(temp)) {
             Point NordEst = Point(temp.x+1, temp.y-1);
-            if (cond_color(NordEst)) {
-                if (cond_indTab(NordEst)) {
-                    Pile.push(NordEst);
-                }
+            if (cond_color(NordEst) && cond_indTab(NordEst)) {
+                Pile.push(NordEst);
+            } else {
+                fillGroup(NordEst);
             }
         }
 
         //Y-1 && X-1
         if (cond_y_nord(temp) && cond_x_ouest(temp)) {
             Point NordOuest = Point(temp.x-1, temp.y-1);
-            if (cond_color(NordOuest)) {
-                if (cond_indTab(NordOuest)) {
-                    Pile.push(NordOuest);
-                }
+            if (cond_color(NordOuest) && cond_indTab(NordOuest)) {
+                Pile.push(NordOuest);
+            } else {
+                fillGroup(NordOuest);
             }
         }
 
         //X+1
         if (cond_x_est(temp)) {
             Point Xest = Point(temp.x+1, temp.y);
-            if (cond_color(Xest)) {
-                if (cond_indTab(Xest)) {
-                    Pile.push(Xest);
-                }
+            if (cond_color(Xest) && cond_indTab(Xest)) {
+                Pile.push(Xest);
+            } else {
+                fillGroup(Xest);
             }
             //std::cout<<"cond_y_est ";
         }
@@ -167,10 +170,10 @@ void Region::pathGerm() {
         //X-1
         if (cond_x_ouest(temp)) {
             Point Xouest = Point(temp.x-1, temp.y);
-            if (cond_color(Xouest)) {
-                if (cond_indTab(Xouest)) {
-                    Pile.push(Xouest);
-                }
+            if (cond_color(Xouest) && cond_indTab(Xouest)) {
+                Pile.push(Xouest);
+            } else {
+                fillGroup(Xouest);
             }
             //std::cout<<"cond_y_ouest ";
         }
