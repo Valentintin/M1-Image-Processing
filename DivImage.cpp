@@ -21,7 +21,7 @@ void DivImage::division(int* indTab) {
     for (int x = 0; x + divSize->height <= image->cols; x = x + divSize->height) {
         for (int y = 0; y + divSize->width <= image->rows; y = y + divSize->width) {
             Point randomCooDiv = randomPlantGerm(Point(x, y));
-            std::cout<<"init germ at : "<<randomCooDiv<<'\n';
+            //std::cout<<"init germ at : "<<randomCooDiv<<'\n';
             id++;
             listRegion.emplace_back(Region(image,indTab, randomCooDiv, id, image->at<Vec3b>(Point(x, y)), 40));
         }

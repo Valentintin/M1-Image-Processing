@@ -34,18 +34,18 @@ void Fusion::findColorFusion() {
         randomIntensityTab[i] = Vec3b(0, 0, 0);
     }
     for (int i = 0; i<listRegion.size(); i++) {
-        std::cout<<"\n Colorisation de la région "<<i+1<<":    ";
+        //std::cout<<"\n Colorisation de la région "<<i+1<<":    ";
         if (randomIntensityTab[i] == Vec3b(0, 0, 0)) { //color for Ri ins't already affected
             //findColorFusionRec(i+1, listRegion[i].getGroup(), randomOneIntensity(), listRegion[i].getIntensity());
             Vec3b randomIntensity = randomOneIntensity();
             for (int ind : listRegion[i].getGroup()) {
                 if (randomIntensityTab[ind-1] != Vec3b(0, 0, 0)) {
-                    std::cout<<"r"<<ind<<" déjà init,     ";
+                    //std::cout<<"r"<<ind<<" déjà init,     ";
                 } else if ( listRegion[ind-1].compare_color(listRegion[i].getIntensity(), seuil) ) {
                     randomIntensityTab[ind-1] = randomIntensity;
-                    std::cout<<"r"<<ind<<" coloré,   ";
+                    //std::cout<<"r"<<ind<<" coloré,   ";
                 } else {
-                    std::cout<<"r"<<ind<<"pas coloré,    ";
+                    //std::cout<<"r"<<ind<<"pas coloré,    ";
                 }
             }
         }
@@ -55,7 +55,6 @@ void Fusion::findColorFusion() {
 Mat Fusion::getFusion() {
     findColorFusion();
     //randomIntensity(); //sans fusion
-    std::cout<<"he \n";
     for (int x = 0; x<fusioned.cols; x++) {
         for (int y = 0; y<fusioned.rows; y++) {
             if (indTab[x * fusioned.size().height + y] > 0) { //verify that 
