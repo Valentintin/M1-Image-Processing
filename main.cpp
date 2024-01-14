@@ -8,7 +8,7 @@
 #include "Region.hpp"
 
 using namespace cv;
-
+/*
 int main()
 {
     std::string image_path = "img/t1.png";
@@ -41,3 +41,4 @@ int main()
     delete [] indTab;
     return 0;
 }
+*/
