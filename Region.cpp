@@ -29,7 +29,6 @@ bool Region::compare_color(Vec3b color, const int & seuil_) {
         }
     }
     return true;
-    return false;
 }
 
 bool Region::cond_color(const Point & point) {
