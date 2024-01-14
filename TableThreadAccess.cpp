@@ -1,12 +1,10 @@
 #include "TableThreadAccess.hpp"
-#include <opencv2/core/types.hpp>
 
 TableThreadAccess::TableThreadAccess(const cv::Size & imgSize) {
     tableIndexRegion = new int[imgSize.height*imgSize.width];
     tableBoolAccess = new bool[imgSize.height*imgSize.width];
     for (int i = 0; i<imgSize.height*imgSize.width; i++) {
         tableBoolAccess[i] = false;
-        tableIndexRegion[i] = 0;
     }
     height = imgSize.height;
 }

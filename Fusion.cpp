@@ -1,7 +1,7 @@
 #include "Fusion.hpp"
 #include "TableThreadAccess.hpp"
 #include <iostream>
-#include <opencv2/core.hpp>
+#include <stack>
 
 
 Fusion::Fusion( Mat * image_, TableThreadAccess* tableThreadAccess_, const std::vector<Region> listRegion_, const int & seuil_) : fusioned(image_->clone()), tableThreadAccess(tableThreadAccess_), listRegion(listRegion_), seuil(seuil_) {
@@ -10,24 +10,6 @@ Fusion::Fusion( Mat * image_, TableThreadAccess* tableThreadAccess_, const std::
 
 Fusion::~Fusion() {
 }
-
-/* void Fusion::findColorFusionRec(int ind, std::set<int> grp, Vec3b randomIntensity, Vec3b referenceColor) {
-    grp.pop();
-    if (randomIntensityTab[ind-1] != Vec3b(0, 0, 0)) {
-        // std::cout<<"stop déjà init "<<ind<<'\n';
-        return;
-    }
-    if ( listRegion[ind-1].compare_color(referenceColor, seuil) ) {
-        randomIntensityTab[ind-1] = randomIntensity;
-        // std::cout<<"r"<<ind<<" coloré,   ";
-    }
-    if (!grp.empty()) {
-        findColorFusionRec(grp.top(), grp, randomIntensity, referenceColor);
-    } else {
-        // std::cout<<"fin grp \n";
-    }
-} */
-
 
 void Fusion::findColorFusion() {
     randomIntensityTab.clear();
@@ -63,11 +45,9 @@ void Fusion::findColorFusion() {
 Mat Fusion::getFusion() {
     findColorFusion();
     //randomIntensity(); //sans fusion
-    // std::cout<<"he \n";
     for (int x = 0; x<fusioned.cols; x++) {
         for (int y = 0; y<fusioned.rows; y++) {
-            if (tableThreadAccess->getID(Point(x,y)) > 0) { //verify that 
-                //std::cout<<indTab[x * fusioned->size().height + y] <<"\n";
+            if (tableThreadAccess->getID(Point(x,y)) > 0) { 
                 fusioned.at<Vec3b>(Point(x, y)) = randomIntensityTab[tableThreadAccess->getID(Point(x, y))-1];
             }
         }

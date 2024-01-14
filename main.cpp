@@ -72,7 +72,7 @@ int main()
     cv::destroyAllWindows();
     */
     // main for image
-    std::string image_path = "img/t3.jpg";
+    std::string image_path = "img/t1.png";
     Mat img = imread(image_path, IMREAD_COLOR);
     // std::cout<<"height : "<<img.size().height<<", width : "<<img.size().width<<'\n';
 

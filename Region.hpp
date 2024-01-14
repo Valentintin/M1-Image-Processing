@@ -40,17 +40,29 @@ class Region{
          */
         void pathGerm();
 
+        /**
+         * @brief Get the Group object
+         * 
+         * @return std::set<int> 
+         */
         std::set<int> getGroup();
 
-        void mergeGroup(std::set<int> group_);
-
+        /**
+         * @brief Get the Intensity object
+         * 
+         * @return Vec3b 
+         */
         Vec3b getIntensity();
 
+        /**
+         * @brief compare the current intensity with the color pass in parameter.
+         * 
+         * @param color 
+         * @param seuil 
+         * @return true 
+         * @return false 
+         */
         bool compare_color(Vec3b color, const int & seuil);
-        
-        int id;
-
-        Mat* image;
         
     private:
         /**
@@ -60,19 +72,59 @@ class Region{
          * @return false 
          */
         bool cond_color(const Point & point);
+        /**
+         * @brief verify that the case ins't already marked
+         * 
+         * @param point 
+         * @return true 
+         * @return false 
+         */
         bool cond_indTab(const Point & point);
+        /**
+         * @brief verify that the point is in the shape
+         * 
+         * @param point 
+         * @return true 
+         * @return false 
+         */
         bool cond_x_est(const Point & point);
+        /**
+         * @brief verify that the point is in the shape
+         * 
+         * @param point 
+         * @return true 
+         * @return false 
+         */
         bool cond_x_ouest(const Point & point);
+        /**
+         * @brief verify that the point is in the shape
+         * 
+         * @param point 
+         * @return true 
+         * @return false 
+         */
         bool cond_y_sud(const Point & point);
+        /**
+         * @brief verify that the point is in the shape
+         * 
+         * @param point 
+         * @return true 
+         * @return false 
+         */
         bool cond_y_nord(const Point & point);
+        /**
+         * @brief fill the group of neight
+         * 
+         * @param point 
+         */
         void fillGroup(const Point & point);
 
         Point germ;
+        Mat* image;
+        int id;
         TableThreadAccess* tableThreadAccess;
-        std::vector<Point> refused;
         int seuil;
         Vec3b intensity; //couleur de germe initial
-        Vec3b randomFinalColor;
         std::set<int> group;
 };
 

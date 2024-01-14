@@ -7,7 +7,6 @@
 
 Region::Region(Mat * image_, TableThreadAccess* tableThreadAccess_, const Point & germInit, const int & id_, const Vec3b & intensity_, const int & seuil_)  : 
 image(image_), germ(germInit), id(id_), intensity(intensity_), seuil(seuil_), tableThreadAccess(tableThreadAccess_){
-    refused.clear();
     group.emplace(id);
 }
 
@@ -17,10 +16,6 @@ Region::~Region() {
 
 std::set<int> Region::getGroup() {
     return group;
-}
-
-void Region::mergeGroup(std::set<int> group_) {
-    group.merge(group_);
 }
 
 Vec3b Region::getIntensity() {

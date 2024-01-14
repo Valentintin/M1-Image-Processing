@@ -9,7 +9,6 @@
 #include <opencv2/core/types.hpp>
 #include <opencv2/core/matx.hpp>
 #include <vector>
-#include <stack>
 #include "Region.hpp"
 #include "TableThreadAccess.hpp"
 
@@ -38,7 +37,6 @@ class Fusion {
          */
         Mat getFusion();
         
-        std::stack<int> setOfGroup;
     private:
 
         /**
@@ -68,6 +66,7 @@ class Fusion {
          * @return Vec3b 
          */
         Vec3b randomOneIntensity();
+
         int seuil;
         std::vector<Vec3b> randomIntensityTab;
         std::vector<Region> listRegion;
