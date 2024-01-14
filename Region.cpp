@@ -1,11 +1,12 @@
 #include "Region.hpp"
+#include "TableThreadAccess.hpp"
 #include <stack>
 #include <iostream>
 
 
 
-Region::Region(Mat * image_, int * indTab_, const Point & germInit, const int & id_, const Vec3b & intensity_, const int & seuil_)  : 
-image(image_), germ(germInit), id(id_), intensity(intensity_), seuil(seuil_), indTab(indTab_){
+Region::Region(Mat * image_, TableThreadAccess* tableThreadAccess_, const Point & germInit, const int & id_, const Vec3b & intensity_, const int & seuil_)  : 
+image(image_), germ(germInit), id(id_), intensity(intensity_), seuil(seuil_), tableThreadAccess(tableThreadAccess_){
     refused.clear();
     group.emplace(id);
 }
@@ -16,6 +17,10 @@ Region::~Region() {
 
 std::set<int> Region::getGroup() {
     return group;
+}
+
+void Region::mergeGroup(std::set<int> group_) {
+    group.merge(group_);
 }
 
 Vec3b Region::getIntensity() {
@@ -37,7 +42,7 @@ bool Region::cond_color(const Point & point) {
 }
 
 bool Region::cond_indTab(const Point & point) {
-    if (indTab[point.x * image->size().height + point.y] == 0) {
+    if (tableThreadAccess->getID(point) == 0) {
         return true;
     }
     return false;
@@ -69,9 +74,9 @@ bool Region::cond_x_ouest(const Point & point) {
 }
 
 void Region::fillGroup(const Point & point) {
-    if (indTab[point.x * image->size().height + point.y] > 0) {
-        //std::cout<<"ajout dans grp"<<id<<" de "<<indTab[point.x * image->size().height + point.y]<<'\n';
-        group.emplace(indTab[point.x * image->size().height + point.y]);
+    if (tableThreadAccess->getID(point) > 0) {
+        //std::cout<<"ajout dans grp"<<id<<" de "<<tableThreadAccess->getID(point)<<'\n';
+        group.emplace(tableThreadAccess->getID(point));
     }
 }
 
@@ -86,8 +91,8 @@ void Region::pathGerm() {
 
         //on dépile
         //std::cout<<"dépile "<<Pile.top().x<<','<<Pile.top().y<<'\n';
-        if (indTab[Pile.top().x * image->size().height + Pile.top().y] == 0) {
-            indTab[Pile.top().x * image->size().height + Pile.top().y] = id;
+        if (tableThreadAccess->getID(Pile.top()) == 0) {
+            tableThreadAccess->setID(Pile.top(), id);
         }
         Point temp(Pile.top());
         Pile.pop();

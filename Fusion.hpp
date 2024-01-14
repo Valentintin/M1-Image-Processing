@@ -11,6 +11,7 @@
 #include <vector>
 #include <stack>
 #include "Region.hpp"
+#include "TableThreadAccess.hpp"
 
 using namespace cv;
 
@@ -22,7 +23,7 @@ class Fusion {
          * 
          * @param listRegion_ 
          */
-        Fusion(Mat * image_, int* indTab_, const std::vector<Region> listRegion_, const int & seuil_);
+        Fusion(Mat * image_, TableThreadAccess* tableThreadAccess_, const std::vector<Region> listRegion_, const int & seuil_);
 
         /**
          * @brief Destroy the Fusion object
@@ -70,7 +71,7 @@ class Fusion {
         int seuil;
         std::vector<Vec3b> randomIntensityTab;
         std::vector<Region> listRegion;
-        int * indTab;
+        TableThreadAccess* tableThreadAccess;
         Mat fusioned;
 };
 
