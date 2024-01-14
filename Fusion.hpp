@@ -7,6 +7,8 @@
 #include <opencv2/core/hal/interface.h>
 #include <opencv2/core/matx.hpp>
 #include <opencv2/core/types.hpp>
+#include <opencv2/core/matx.hpp>
+#include <vector>
 #include <stack>
 #include "Region.hpp"
 

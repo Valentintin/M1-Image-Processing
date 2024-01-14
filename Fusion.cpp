@@ -1,9 +1,5 @@
 #include "Fusion.hpp"
-#include <cstddef>
 #include <iostream>
-#include <cstdlib>
-#include <opencv2/core/matx.hpp>
-#include <vector>
 
 
 Fusion::Fusion( Mat * image_, int* indTab_, const std::vector<Region> listRegion_, const int & seuil_) : fusioned(image_->clone()), indTab(indTab_), listRegion(listRegion_), seuil(seuil_) {

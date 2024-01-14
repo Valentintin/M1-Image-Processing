@@ -1,5 +1,4 @@
 #include "Region.hpp"
-#include <opencv2/core/matx.hpp>
 #include <stack>
 #include <iostream>
 
