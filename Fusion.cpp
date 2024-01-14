@@ -61,8 +61,8 @@ void Fusion::findColorFusion() {
 }
 
 Mat Fusion::getFusion() {
-    //findColorFusion();
-    randomIntensity(); //sans fusion
+    findColorFusion();
+    //randomIntensity(); //sans fusion
     std::cout<<"he \n";
     for (int x = 0; x<fusioned.cols; x++) {
         for (int y = 0; y<fusioned.rows; y++) {
