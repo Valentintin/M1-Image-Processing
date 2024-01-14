@@ -1,5 +1,6 @@
 #ifndef _REGION
 #define _REGION
+#include "TableThreadAccess.hpp"
 #include <opencv2/core.hpp>
 #include <opencv2/core/types.hpp>
 #include <opencv2/highgui.hpp>
@@ -25,7 +26,7 @@ class Region{
          * 
          * @param Region 
          */
-        Region(Mat * image_, int* indTab_, const Point & germInit, const int & id_, const Vec3b & intensity_, const int & seuil_);
+        Region(Mat * image_, TableThreadAccess* tableThreadAccess_, const Point & germInit, const int & id_, const Vec3b & intensity_, const int & seuil_);
 
         /**
          * @brief Destroy the Region object
@@ -40,6 +41,8 @@ class Region{
         void pathGerm();
 
         std::set<int> getGroup();
+
+        void mergeGroup(std::set<int> group_);
 
         Vec3b getIntensity();
 
@@ -65,7 +68,7 @@ class Region{
         void fillGroup(const Point & point);
 
         Point germ;
-        int* indTab;
+        TableThreadAccess* tableThreadAccess;
         std::vector<Point> refused;
         int seuil;
         Vec3b intensity; //couleur de germe initial

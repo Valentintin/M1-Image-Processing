@@ -2,6 +2,7 @@
 #define _DIVIMAGE
 
 #include "Region.hpp"
+#include "TableThreadAccess.hpp"
 #include <opencv2/core.hpp>
 #include <opencv2/core/types.hpp>
 #include <opencv2/highgui.hpp>
@@ -35,7 +36,7 @@ class DivImage {
          * @brief divise the image in n for create Region
          * 
          */
-        void division(int* indTab);
+        void division(TableThreadAccess* tableThreadAccess);
 
         /**
          * @brief Get the List Region object

@@ -2,31 +2,39 @@
 #include <opencv2/core.hpp>
 #include <opencv2/core/hal/interface.h>
 #include <opencv2/highgui.hpp>
+#include <thread>
 #include <vector>
 #include "DivImage.hpp"
 #include "Fusion.hpp"
 #include "Region.hpp"
+#include "TableThreadAccess.hpp"
 
 using namespace cv;
 
 int main()
 {
-    std::string image_path = "img/t1.png";
+    std::string image_path = "img/lena_color.png";
     Mat img = imread(image_path, IMREAD_COLOR);
     std::cout<<"height : "<<img.size().height<<", width : "<<img.size().width<<'\n';
 
-    int seuil = 40;
-    DivImage* divImage = new DivImage(&img, 124, seuil);
+    int seuil = 50;
+    DivImage* divImage = new DivImage(&img, 256, seuil);
 
-    int* indTab = new int[img.size().height * img.size().width]{0};
+    int* indTab = new int[img.size().height * img.size().width]();
 
-    divImage->division(indTab);
+    TableThreadAccess* tableThreadAccess = new TableThreadAccess(img.size());
+
+    divImage->division(tableThreadAccess);
     std::vector<Region> listRegion = divImage->getListRegion();
+    
+    std::vector<std::thread> tab_threads;
     for (int i = 0; i<listRegion.size(); i++) {
-        listRegion[i].pathGerm();
+        tab_threads.push_back(std::thread(&Region::pathGerm, std::ref(listRegion[i])));
     }
-
-    Fusion* fusion = new Fusion(&img, indTab, listRegion, seuil);
+    for (int i = 0; i < listRegion.size(); i++) {
+		tab_threads[i].join();
+	}
+    Fusion* fusion = new Fusion(&img, tableThreadAccess, listRegion, seuil);
 
     std::cout<<"ho \n";
     Mat img2 = fusion->getFusion();
@@ -39,5 +47,6 @@ int main()
     delete divImage;
     delete fusion;
     delete [] indTab;
+    delete tableThreadAccess;
     return 0;
 }
