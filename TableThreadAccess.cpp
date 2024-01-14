@@ -6,6 +6,7 @@ TableThreadAccess::TableThreadAccess(const cv::Size & imgSize) {
     tableBoolAccess = new bool[imgSize.height*imgSize.width];
     for (int i = 0; i<imgSize.height*imgSize.width; i++) {
         tableBoolAccess[i] = false;
+        tableIndexRegion[i] = 0;
     }
     height = imgSize.height;
 }

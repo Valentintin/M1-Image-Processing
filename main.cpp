@@ -2,6 +2,7 @@
 #include <opencv2/core.hpp>
 #include <opencv2/core/hal/interface.h>
 #include <opencv2/highgui.hpp>
+#include <thread>
 #include <vector>
 #include "DivImage.hpp"
 #include "Fusion.hpp"
@@ -25,10 +26,14 @@ int main()
 
     divImage->division(tableThreadAccess);
     std::vector<Region> listRegion = divImage->getListRegion();
+    
+    std::vector<std::thread> tab_threads;
     for (int i = 0; i<listRegion.size(); i++) {
-        listRegion[i].pathGerm();
+        tab_threads.push_back(std::thread(&Region::pathGerm, std::ref(listRegion[i])));
     }
-
+    for (int i = 0; i < listRegion.size(); i++) {
+		tab_threads[i].join();
+	}
     Fusion* fusion = new Fusion(&img, tableThreadAccess, listRegion, seuil);
 
     std::cout<<"ho \n";
